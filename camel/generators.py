@@ -44,28 +44,41 @@ class SystemMessageGenerator:
             self.sys_msg_meta_dict_keys = sys_msg_meta_dict_keys or set()
         else:
             templates = PromptTemplateGenerator()
-            agenttech_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV)
-            counselor_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_COUNSELOR)
-            ceo_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_CEO)
-            chro_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_CHRO)
-            cpo_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_CPO)
-            cto_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_CTO)
-            programmer_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_PROGRAMMER)
-            reviewer_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_REVIEWER)
-            tester_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_TESTER)
-            cco_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATDEV_CCO)
+            agenttech_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND)
+            counselor_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_COUNSELOR)
+            ceo_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_CEO)
+            chro_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_CHRO)
+            cpo_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_CPO)
+            cto_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_CTO)
+            programmer_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_PROGRAMMER)
+            reviewer_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_REVIEWER)
+            tester_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_TESTER)
+            cco_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_CCO)
+            pi_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_PI)
+            postdoc_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_POSTDOC)
+            phd_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_PHD)
+            intern_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_INTERN)
+            labmanager_prompt_template = templates.get_system_prompt(task_type, RoleType.CHATRND_LABMANAGER)
+           
 
             self.sys_prompts = dict()
-            self.sys_prompts[RoleType.CHATDEV] = agenttech_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_COUNSELOR] = counselor_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_CEO] = ceo_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_CHRO] = chro_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_CPO] = cpo_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_CTO] = cto_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_PROGRAMMER] = programmer_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_REVIEWER] = reviewer_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_TESTER] = tester_prompt_template
-            self.sys_prompts[RoleType.CHATDEV_CCO] = cco_prompt_template
+            self.sys_prompts[RoleType.CHATRND] = agenttech_prompt_template
+            self.sys_prompts[RoleType.CHATRND_COUNSELOR] = counselor_prompt_template
+            self.sys_prompts[RoleType.CHATRND_CEO] = ceo_prompt_template
+            self.sys_prompts[RoleType.CHATRND_CHRO] = chro_prompt_template
+            self.sys_prompts[RoleType.CHATRND_CPO] = cpo_prompt_template
+            self.sys_prompts[RoleType.CHATRND_CTO] = cto_prompt_template
+            self.sys_prompts[RoleType.CHATRND_PROGRAMMER] = programmer_prompt_template
+            self.sys_prompts[RoleType.CHATRND_REVIEWER] = reviewer_prompt_template
+            self.sys_prompts[RoleType.CHATRND_TESTER] = tester_prompt_template
+            self.sys_prompts[RoleType.CHATRND_CCO] = cco_prompt_template
+
+
+            self.sys_prompts[RoleType.CHATRND_PI] = pi_prompt_template
+            self.sys_prompts[RoleType.CHATRND_POSTDOC] = postdoc_prompt_template
+            self.sys_prompts[RoleType.CHATRND_PHD] = phd_prompt_template
+            self.sys_prompts[RoleType.CHATRND_INTERN] = intern_prompt_template
+            self.sys_prompts[RoleType.CHATRND_LABMANAGER] = labmanager_prompt_template
 
             self.sys_msg_meta_dict_keys = (agenttech_prompt_template.key_words |
                                            counselor_prompt_template.key_words |
@@ -76,7 +89,12 @@ class SystemMessageGenerator:
                                            programmer_prompt_template.key_words |
                                            reviewer_prompt_template.key_words |
                                            tester_prompt_template.key_words |
-                                           cco_prompt_template.key_words)
+                                           cco_prompt_template.key_words |
+                                           pi_prompt_template.key_words |
+                                           postdoc_prompt_template.key_words |
+                                           phd_prompt_template.key_words |
+                                           intern_prompt_template.key_words |
+                                           labmanager_prompt_template.key_words )
 
         if RoleType.DEFAULT not in self.sys_prompts:
             self.sys_prompts[RoleType.DEFAULT] = "You are a helpful assistant."

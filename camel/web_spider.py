@@ -4,10 +4,16 @@ import openai
 from openai import OpenAI
 import wikipediaapi
 import os
-import time
+from dotenv import load_dotenv
 
-self_api_key = os.environ.get('OPENAI_API_KEY')
-BASE_URL = os.environ.get('BASE_URL')
+# Load environment variables from .env file
+load_dotenv()
+
+self_api_key = os.getenv('OPENAI_API_KEY')
+BASE_URL = os.getenv('BASE_URL')
+
+if not BASE_URL:
+    BASE_URL = None
 
 if BASE_URL:
     client = openai.OpenAI(
@@ -87,3 +93,5 @@ def modal_trans(task_dsp):
         result = ''
         print("the content is none")
     return result
+
+

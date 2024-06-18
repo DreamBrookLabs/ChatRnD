@@ -1,0 +1,1 @@
+multi trajectories monte carlo random walk, make sure user can re-run experiment, each experiment should generate .csv output of trajectories and result be plotted and saved to image_datetime.png. Include a detailed .md file for the theory review including derivation when possible 

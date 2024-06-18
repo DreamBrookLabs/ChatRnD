@@ -1,10 +1,11 @@
 import re
 import os
+import time
 from colorama import Fore
 
 
 class Documents():
-    def __init__(self, generated_content = "", parse = True, predifined_filename = None):
+    def __init__(self, generated_content = "", parse = True, predefined_filename = None):
         self.directory: str = None
         self.generated_content = generated_content
         self.docbooks = {}
@@ -18,10 +19,10 @@ class Documents():
                     doc = match.group(1)
                     self.docbooks[filename] = doc
             else:
-                self.docbooks[predifined_filename] = self.generated_content
+                self.docbooks[predefined_filename] = self.generated_content
 
-    def _update_docs(self, generated_content, parse = True, predifined_filename = ""):
-        new_docs = Documents(generated_content, parse, predifined_filename)
+    def _update_docs(self, generated_content, parse = True, predefined_filename = ""):
+        new_docs = Documents(generated_content, parse, predefined_filename)
         for key in new_docs.docbooks.keys():
             if key not in self.docbooks.keys() or self.docbooks[key] != new_docs.docbooks[key]:
                 print("{} updated.".format(key))

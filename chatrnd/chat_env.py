@@ -9,13 +9,11 @@ from typing import Dict
 import openai
 import requests
 
-
-from ecl.memory import Memory
-
 from chatrnd.codes import Codes
 from chatrnd.documents import Documents
 from chatrnd.roster import Roster
 from chatrnd.utils import log_visualize
+from ecl.memory import Memory
 
 try:
     from openai.types.chat.chat_completion_message_tool_call import ChatCompletionMessageToolCall
@@ -34,7 +32,7 @@ class ChatEnvConfig:
                  background_prompt,
                  with_memory):
         self.clear_structure = clear_structure  # Whether to clear non-software files in the WareHouse and cache files in generated software path
-        self.gui_design = gui_design  # Encourage ChatDev generate software with GUI
+        self.gui_design = gui_design  # Encourage ChatRND generate software with GUI
         self.git_management = git_management  # Whether to use git to manage the creation and changes of generated software
         self.incremental_develop = incremental_develop  # Whether to use incremental develop on an existing project
         self.background_prompt = background_prompt  # background prompt that will be added to every inquiry to LLM
@@ -61,6 +59,7 @@ class ChatEnv:
         self.incorporated_images: Dict[str, str] = {}
         self.requirements: Documents = Documents()
         self.manuals: Documents = Documents()
+        self.theories: Documents = Documents()
         self.env_dict = {
             "directory": "",
             "task_prompt": "",
@@ -87,6 +86,7 @@ class ChatEnv:
         self.codes.directory = directory
         self.requirements.directory = directory
         self.manuals.directory = directory
+        self.theories.directory = directory
 
         if os.path.exists(self.env_dict['directory']) and len(os.listdir(directory)) > 0:
             new_directory = "{}.{}".format(directory, time.strftime("%Y%m%d%H%M%S", time.localtime()))
@@ -109,7 +109,7 @@ class ChatEnv:
     def exist_bugs(self) -> tuple[bool, str]:
         directory = self.env_dict['directory']
 
-        success_info = "The Research was performed successfully without errors."
+        success_info = "The software run successfully without errors."
         try:
 
             # check if we are on windows or linux
@@ -189,10 +189,16 @@ class ChatEnv:
         return self.requirements._get_docs()
 
     def _update_manuals(self, generated_content):
-        self.manuals._update_docs(generated_content, parse=False, predifined_filename="manual.md")
+        self.manuals._update_docs(generated_content, parse=False, predefined_filename="manual.md")
 
     def rewrite_manuals(self):
         self.manuals._rewrite_docs()
+
+    def _update_theories(self, generated_content):
+        self.theories._update_docs(generated_content, parse=False, predefined_filename="theory.md")
+
+    def rewrite_theories(self):
+        self.theories._rewrite_docs()
 
     def write_meta(self) -> None:
         directory = self.env_dict['directory']

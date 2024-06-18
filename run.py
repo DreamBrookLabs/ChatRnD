@@ -13,8 +13,8 @@ sys.path.append(root)
 
 
 # Local import from chatrnd package under development
-from  chatrnd.chat_chain import ChatChain
-#from chatdev.chat_chain import ChatChain
+#from  chatrnd.reasoning_model import AoT, ...
+from chatrnd.chat_chain import ChatChain
 
 try:
     from openai.types.chat.chat_completion_message_tool_call import ChatCompletionMessageToolCall
@@ -39,8 +39,8 @@ def get_config(company):
     Returns:
         path to three configuration jsons: [config_path, config_phase_path, config_role_path]
     """
-    config_dir = os.path.join(root, "CompanyConfig", company)
-    default_config_dir = os.path.join(root, "CompanyConfig", "Default")
+    config_dir = os.path.join(root, "LabConfig", company)
+    default_config_dir = os.path.join(root, "LabConfig", "Default")
 
     config_files = [
         "ChatChainConfig.json",
@@ -51,11 +51,11 @@ def get_config(company):
     config_paths = []
 
     for config_file in config_files:
-        company_config_path = os.path.join(config_dir, config_file)
+        lab_config_path = os.path.join(config_dir, config_file)
         default_config_path = os.path.join(default_config_dir, config_file)
 
-        if os.path.exists(company_config_path):
-            config_paths.append(company_config_path)
+        if os.path.exists(lab_config_path):
+            config_paths.append(lab_config_path)
         else:
             config_paths.append(default_config_path)
 
@@ -63,7 +63,7 @@ def get_config(company):
 
 
 parser = argparse.ArgumentParser(description='argparse')
-parser.add_argument('--config', type=str, default="Default",
+parser.add_argument('--config', type=str, default="RH_Univ",
                     help="Name of config, which is used to load configuration under LabConfig/")
 parser.add_argument('--org', type=str, default="DefaultLab",
                     help="Name of Laboratory, your research will be generated in WareHouse/name_lab_timestamp")
@@ -85,12 +85,22 @@ args = parser.parse_args()
 #          Init ChatChain
 # ----------------------------------------
 config_path, config_phase_path, config_role_path = get_config(args.config)
+
+
+### Create new ModelType.newmodel
+# ModelType.PhDBot_a
+# ModelType.AkashChat
+# ModelType.replicate_modelname
+
 args2type = {'GPT_3_5_TURBO': ModelType.GPT_3_5_TURBO,
              'GPT_4': ModelType.GPT_4,
-            #  'GPT_4_32K': ModelType.GPT_4_32k,
              'GPT_4_TURBO': ModelType.GPT_4_TURBO,
             #  'GPT_4_TURBO_V': ModelType.GPT_4_TURBO_V
+            #  'GPT_4_32K': ModelType.GPT_4_32k,
              }
+
+
+
 if openai_new_api:
     args2type['GPT_3_5_TURBO'] = ModelType.GPT_3_5_TURBO_NEW
 

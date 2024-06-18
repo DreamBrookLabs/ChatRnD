@@ -1,0 +1,33 @@
+Task:
+multi trajectories monte carlo random walk, make sure user can re-run experiment, each experiment should generate .csv output of trajectories and result be plotted and saved to image_datetime.png. Include a detailed .md file for the theory review including derivation when possible 
+
+Config:
+ChatEnvConfig.with_memory: False
+ChatEnvConfig.clear_structure: True
+ChatEnvConfig.git_management: False
+ChatEnvConfig.gui_design: True
+ChatEnvConfig.incremental_develop: False
+ChatEnvConfig.background_prompt: ChatRnD is a research team powered by multiple intelligent agents, with roles such as principal investigator, phd student, postdoc researcher, lab manager, research intern and more. The goal is to produce scientific report and modules that can be tested via code deployments.'
+
+
+Roster:
+Chief Executive Officer, Counselor, Chief Human Resource Officer, Chief Product Officer, Chief Technology Officer, Programmer, Code Reviewer, Software Test Engineer, Chief Creative Officer, Principal Investigator, Postdoc Researcher, PhD Student, Research Intern, Lab Manager
+
+Modality:
+excel
+
+Ideas:
+
+
+Language:
+ Python
+
+Code_Version:
+4.0
+
+Proposed_images:
+0
+
+Incorporated_images:
+0
+

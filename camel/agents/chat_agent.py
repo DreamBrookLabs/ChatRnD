@@ -28,7 +28,7 @@ from camel.utils import (
     num_tokens_from_messages,
     openai_api_key_required,
 )
-from chatdev.utils import log_visualize
+from chatrnd.utils import log_visualize
 try:
     from openai.types.chat import ChatCompletion
 

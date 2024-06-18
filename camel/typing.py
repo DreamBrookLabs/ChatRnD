@@ -21,7 +21,7 @@ class TaskType(Enum):
     TRANSLATION = "translation"
     EVALUATION = "evaluation"
     SOLUTION_EXTRACTION = "solution_extraction"
-    CHATDEV = "chat_dev"
+    CHATRND = "chat_dev"
     DEFAULT = "default"
 
 
@@ -31,16 +31,23 @@ class RoleType(Enum):
     CRITIC = "critic"
     EMBODIMENT = "embodiment"
     DEFAULT = "default"
-    CHATDEV = "AgentTech"
-    CHATDEV_COUNSELOR = "counselor"
-    CHATDEV_CEO = "chief executive officer (CEO)"
-    CHATDEV_CHRO = "chief human resource officer (CHRO)"
-    CHATDEV_CPO = "chief product officer (CPO)"
-    CHATDEV_CTO = "chief technology officer (CTO)"
-    CHATDEV_PROGRAMMER = "programmer"
-    CHATDEV_REVIEWER = "code reviewer"
-    CHATDEV_TESTER = "software test engineer"
-    CHATDEV_CCO = "chief creative officer (CCO)"
+    CHATRND = "AgentTech"
+    CHATRND_COUNSELOR = "counselor"
+    CHATRND_CEO = "chief executive officer (CEO)"
+    CHATRND_CHRO = "chief human resource officer (CHRO)"
+    CHATRND_CPO = "chief product officer (CPO)"
+    CHATRND_CTO = "chief technology officer (CTO)"
+    CHATRND_PROGRAMMER = "programmer"
+    CHATRND_REVIEWER = "code reviewer"
+    CHATRND_TESTER = "software test engineer"
+    CHATRND_CCO = "chief creative officer (CCO)"
+
+    CHATRND_PI = "Principal Investigator (PI)"
+    CHATRND_POSTDOC = "Postdoc Researcher"
+    CHATRND_PHD = "PhD Student"
+    CHATRND_INTERN = "Research Intern"
+    CHATRND_LABMANAGER = "Lab Manager"
+   
 
 
 class ModelType(Enum):
@@ -50,7 +57,6 @@ class ModelType(Enum):
     GPT_4_32k = "gpt-4-32k"
     GPT_4_TURBO = "gpt-4-turbo"
     GPT_4_TURBO_V = "gpt-4-turbo"
-
     STUB = "stub"
 
     @property

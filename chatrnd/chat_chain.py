@@ -9,13 +9,10 @@ from datetime import datetime
 from camel.agents import RolePlaying
 from camel.configs import ChatGPTConfig
 from camel.typing import TaskType, ModelType
+from chatrnd.chat_env import ChatEnv, ChatEnvConfig
+from chatrnd.statistics import get_info
 from camel.web_spider import modal_trans
-
-
-### Modify properly and use chatrnd version 
-from chatdev.chat_env import ChatEnv, ChatEnvConfig
-from chatdev.statistics import get_info
-from chatdev.utils import log_visualize, now
+from chatrnd.utils import log_visualize, now
 
 
 def check_bool(s):
@@ -39,8 +36,8 @@ class ChatChain:
             config_path: path to the ChatChainConfig.json
             config_phase_path: path to the PhaseConfig.json
             config_role_path: path to the RoleConfig.json
-            task_prompt: the user input prompt for research project
-            project_name: the user input name for research project
+            task_prompt: the user input prompt for software
+            project_name: the user input name for software
             org_name: the organization name of the human user
         """
 
@@ -92,11 +89,11 @@ class ChatChain:
         self.start_time, self.log_filepath = self.get_logfilepath()
 
         # init SimplePhase instances
-        # import all used phases in PhaseConfig.json from chatdev.phase
+        # import all used phases in PhaseConfig.json from chatrnd.phase
         # note that in PhaseConfig.json there only exist SimplePhases
         # ComposedPhases are defined in ChatChainConfig.json and will be imported in self.execute_step
-        self.compose_phase_module = importlib.import_module("chatdev.composed_phase")
-        self.phase_module = importlib.import_module("chatdev.phase")
+        self.compose_phase_module = importlib.import_module("chatrnd.composed_phase")
+        self.phase_module = importlib.import_module("chatrnd.phase")
         self.phases = dict()
         for phase in self.config_phase:
             assistant_role_name = self.config_phase[phase]['assistant_role_name']
@@ -142,14 +139,14 @@ class ChatChain:
                                                            self.chat_turn_limit_default if max_turn_step <= 0 else max_turn_step,
                                                            need_reflect)
             else:
-                raise RuntimeError(f"Phase '{phase}' is not yet implemented in chatdev.phase")
+                raise RuntimeError(f"Phase '{phase}' is not yet implemented in chatrnd.phase")
         # For ComposedPhase, we create instance here then conduct the "ComposedPhase.execute" method
         elif phase_type == "ComposedPhase":
             cycle_num = phase_item['cycleNum']
             composition = phase_item['Composition']
             compose_phase_class = getattr(self.compose_phase_module, phase)
             if not compose_phase_class:
-                raise RuntimeError(f"Phase '{phase}' is not yet implemented in chatdev.compose_phase")
+                raise RuntimeError(f"Phase '{phase}' is not yet implemented in chatrnd.compose_phase")
             compose_phase_instance = compose_phase_class(phase_name=phase,
                                                          cycle_num=cycle_num,
                                                          composition=composition,
@@ -245,7 +242,7 @@ class ChatChain:
         preprocess_msg += "**project_name**: {}\n\n".format(self.project_name)
         preprocess_msg += "**Log File**: {}\n\n".format(self.log_filepath)
         preprocess_msg += "**ChatRnDConfig**:\n{}\n\n".format(self.chat_env.config.__str__())
-        preprocess_msg += "**LLMConfig**:\n{}\n\n".format(chat_gpt_config)
+        preprocess_msg += "**LLM Engine Config**:\n{}\n\n".format(chat_gpt_config)
         log_visualize(preprocess_msg)
 
         # init task prompt
@@ -306,7 +303,7 @@ class ChatChain:
                 duration))
 
         post_info += "ChatRnD Starts ({})".format(self.start_time) + "\n\n"
-        post_info += "ChatRnD  Ends ({})".format(now_time) + "\n\n"
+        post_info += "ChatRnD Ends ({})".format(now_time) + "\n\n"
 
         directory = self.chat_env.env_dict['directory']
         if self.chat_env.config.clear_structure:
@@ -336,9 +333,9 @@ class ChatChain:
             revised_task_prompt: revised prompt from the prompt engineer agent
 
         """
-        self_task_improve_prompt = """I will give you a short description of a research topic and task, 
-please rewrite it into a detailed prompt that can make large language model know how to perform the research and analysis better based on this prompt,
-the prompt should ensure LLMs produce a factual and scientific output that can be validated, which is the most import part you need to consider.
+        self_task_improve_prompt = """I will give you a short description of a software design requirement, 
+please rewrite it into a detailed prompt that can make large language model know how to make this software better based this prompt,
+the prompt should ensure LLMs build a software that can be run correctly, which is the most import part you need to consider.
 remember that the revised prompt should not contain more than 200 words, 
 here is the short description:\"{}\". 
 If the revised prompt is revised_version_of_the_description, 
@@ -347,9 +344,9 @@ then you should return a message in a format like \"<INFO> revised_version_of_th
         role_play_session = RolePlaying(
             assistant_role_name="Prompt Engineer",
             assistant_role_prompt="You are an professional prompt engineer that can improve user input prompt to make LLM better understand these prompts.",
-            user_role_prompt="You are an user that want to use LLM to do scientific research.",
+            user_role_prompt="You are an user that want to use LLM to build software.",
             user_role_name="User",
-            task_type=TaskType.CHATDEV,
+            task_type=TaskType.CHATRND,
             task_prompt="Do prompt engineering on user query",
             with_task_specify=False,
             model_type=self.model_type,

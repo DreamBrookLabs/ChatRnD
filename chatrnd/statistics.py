@@ -2,7 +2,6 @@ import os
 
 import numpy as np
 
-## Update for the latest, and try include other APIs from Akash and VlLMs
 
 def prompt_cost(model_type: str, num_prompt_tokens: float, num_completion_tokens: float):
     input_cost_map = {
@@ -14,6 +13,7 @@ def prompt_cost(model_type: str, num_prompt_tokens: float, num_completion_tokens
         "gpt-4-0613": 0.03,
         "gpt-4-32k": 0.06,
         "gpt-4-turbo": 0.01,
+        "gpt-4o":0.01,
     }
 
     output_cost_map = {
@@ -25,6 +25,7 @@ def prompt_cost(model_type: str, num_prompt_tokens: float, num_completion_tokens
         "gpt-4-0613": 0.06,
         "gpt-4-32k": 0.12,
         "gpt-4-turbo": 0.03,
+        "gpt-4o":0.01,
     }
 
     if model_type not in input_cost_map or model_type not in output_cost_map:

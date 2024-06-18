@@ -1,0 +1,3 @@
+The code seems to be well-structured and follows the given requirements. However, there is one issue that needs to be addressed:
+In the `Application` class, the `select_output_file` method is not updating the label to display the selected file path. This can cause confusion for the user as they might not be aware of the selected file.
+To fix this, you can add a label widget to display the selected file path and update it in the `select_output_file` method. Here's the revised code for the `Application` class:

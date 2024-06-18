@@ -18,8 +18,9 @@ import openai
 import tiktoken
 
 from camel.typing import ModelType
-from chatdev.statistics import prompt_cost
-from chatdev.utils import log_visualize
+from chatrnd.statistics import prompt_cost
+from chatrnd.utils import log_visualize
+
 
 try:
     from openai.types.chat import ChatCompletion
@@ -29,11 +30,15 @@ except ImportError:
     openai_new_api = False  # old openai api version
 
 import os
+from dotenv import load_dotenv
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-if 'BASE_URL' in os.environ:
-    BASE_URL = os.environ['BASE_URL']
-else:
+# Load environment variables from .env file
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+BASE_URL = os.getenv('BASE_URL')
+
+if not BASE_URL:
     BASE_URL = None
 
 
@@ -91,6 +96,7 @@ class OpenAIModel(ModelBackend):
                 "gpt-4-0613": 8192,
                 "gpt-4-32k": 32768,
                 "gpt-4-turbo": 100000,
+                "gpt-4o": 4096,
             }
             num_max_token = num_max_token_map[self.model_type.value]
             num_max_completion_tokens = num_max_token - num_prompt_tokens

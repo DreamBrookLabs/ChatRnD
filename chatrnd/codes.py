@@ -3,7 +3,7 @@ import os
 import re
 import subprocess
 
-from chatdev.utils import log_visualize
+from chatrnd.utils import log_visualize
 
 
 class Codes:

@@ -6,8 +6,6 @@ import time
 import markdown
 import inspect
 from camel.messages.system_messages import SystemMessage
-
-# Need to update this visualizer app
 from visualizer.app import send_msg
 
 
